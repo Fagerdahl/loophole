@@ -1,0 +1,55 @@
+@startuml
+title ER Diagram - Loophole Database schema
+
+entity Booking {
+  *id : UUID
+  check_in : date
+  check_out : date
+  guests : int
+  status : varchar
+  total_price : decimal
+  guest_id : UUID
+  room_id : UUID
+}
+
+entity Guest {
+  *id : UUID
+  full_name : varchar
+  email : varchar
+  phone : varchar
+}
+
+entity Room {
+  *id : UUID
+  name : varchar
+  capacity : int
+  active : boolean
+  room_type_id : UUID
+}
+
+entity RoomType {
+  *id : UUID
+  name : varchar
+}
+
+entity Season {
+  *id : UUID
+  name : varchar
+  start_date : date
+  end_date : date
+}
+
+entity PriceRule {
+  *id : UUID
+  room_type_id : UUID
+  season_id : UUID
+  price_per_night : decimal
+}
+
+Guest ||--o{ Booking : has
+Room ||--o{ Booking : reserved_in
+RoomType ||--o{ Room : defines
+RoomType ||--o{ PriceRule : priced_by
+Season ||--o{ PriceRule : applies_in
+
+@enduml

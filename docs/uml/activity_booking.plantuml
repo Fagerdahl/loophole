@@ -1,0 +1,20 @@
+@startuml
+title Activity Diagram - UC1 Book Stay
+
+start
+
+:Enter dates, guests and contact info;
+:WordPress submits request to backend;
+
+if (Rooms available?) then (yes)
+  :Show available rooms;
+  :Guest confirms booking;
+  :Backend creates Guest + Booking;
+  :Send confirmation email;
+  :Show booking confirmation;
+else (no)
+  :Show "No rooms available";
+endif
+
+stop
+@enduml

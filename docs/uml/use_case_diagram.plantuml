@@ -1,0 +1,27 @@
+@startuml
+title Use Case Diagram - Loophole Booking Service
+
+actor "Guest" as Guest
+actor "Admin" as Admin
+actor "WordPress Frontend" as WP
+
+rectangle "Booking Service (System)" {
+
+  usecase "UC1 - Book Stay" as UC1
+  usecase "UC2 - Cancel Booking" as UC2
+  usecase "UC3 - View Booking Overview" as UC3
+  usecase "UC4 - Manage Rooms & Capacity" as UC4
+  usecase "UC5 - Configure Price Rules" as UC5
+}
+
+Guest --> UC1
+Guest --> UC2
+
+Admin --> UC3
+Admin --> UC4
+Admin --> UC5
+
+WP --> UC1 : Sends booking request
+WP --> UC2 : Sends cancellation request
+
+@enduml

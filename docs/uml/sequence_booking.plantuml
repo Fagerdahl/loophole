@@ -1,0 +1,32 @@
+@startuml
+title Sequence Diagram - UC1 Book Stay via WordPress
+
+actor Guest
+participant "WordPress\nServer (PHP)" as WP
+participant "Booking API\nSpring Boot" as API
+database "Database\nPostgreSQL" as DB
+participant "Email Service" as Mail
+
+Guest -> WP : Enters booking details\n(check-in, check-out, guests, contact info)
+
+WP -> API : Check availability\n(server-side request with API key)
+API -> DB : Query existing bookings
+DB --> API : Availability result
+
+alt Rooms available
+  WP -> API : Submit booking request
+  API -> DB : Save Guest + Booking
+  DB --> API : Booking saved
+
+  API -> Mail : Send confirmation email
+  Mail --> API : OK
+
+  API --> WP : Booking number and summary
+  WP --> Guest : Show confirmation page
+
+else No rooms available
+  API --> WP : Return "no availability"
+  WP --> Guest : Display message
+end
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+title Sequence Diagram - UC3 View Booking Overview
+
+actor Admin
+participant "Admin UI\n(Thymeleaf)" as UI
+participant "Booking API\n(Spring Boot)" as API
+database "PostgreSQL" as DB
+
+Admin -> UI : Open /admin/bookings
+UI -> API : Request bookings\n(with JWT session)
+API -> DB : Query bookings for period
+DB --> API : Result list
+API --> UI : Render booking data
+UI --> Admin : Display booking table
+
+@enduml

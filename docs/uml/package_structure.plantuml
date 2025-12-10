@@ -1,0 +1,51 @@
+@startuml
+title Package Diagram - Spring Boot Structure
+
+package "controller" {
+  class BookingController
+  class AdminController
+}
+
+package "service" {
+  class BookingService
+  class AvailabilityService
+  class RoomService
+  class PriceRuleService
+  class EmailService
+}
+
+package "repository" {
+  class BookingRepository
+  class GuestRepository
+  class RoomRepository
+  class SeasonRepository
+  class PriceRuleRepository
+  class UserRepository
+}
+
+package "model" {
+  class Booking
+  class Guest
+  class Room
+  class RoomType
+  class Season
+  class PriceRule
+  class User
+}
+
+package "security" {
+  class ApiKeyFilter
+  class AdminAuthConfig
+}
+
+package "exception" {
+  class NotFoundException
+  class ValidationException
+}
+
+controller --> service
+service --> repository
+repository --> model
+security --> controller
+
+@enduml

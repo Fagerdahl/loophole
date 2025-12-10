@@ -1,0 +1,66 @@
+@startuml
+title Domain Model (Class diagram) - Objects in my domain, their attributes and relations
+
+class Booking {
+  +id : UUID
+  +checkInDate : Date
+  +checkOutDate : Date
+  +numberOfGuests : int
+  +status : BookingStatus
+  +totalPrice : Decimal
+}
+
+class Guest {
+  +id : UUID
+  +fullName : String
+  +email : String
+  +phone : String
+}
+
+class Room {
+  +id : UUID
+  +name : String
+  +capacity : int
+  +active : boolean
+}
+
+class RoomType {
+  +id : UUID
+  +name : String
+}
+
+class Season {
+  +id : UUID
+  +name : String
+  +startDate : Date
+  +endDate : Date
+}
+
+class PriceRule {
+  +id : UUID
+  +pricePerNight : Decimal
+}
+
+class User {
+  +id : UUID
+  +username : String
+  +passwordHash : String
+  +role : UserRole
+}
+
+enum BookingStatus {
+  CREATED
+  CONFIRMED
+  CANCELLED
+}
+
+' Relations:
+
+Guest "1" --> "0..*" Booking : creates
+Booking --> Room : assigned to
+Room --> RoomType : has type
+
+PriceRule --> RoomType : applies to
+PriceRule --> Season : valid in
+
+@enduml

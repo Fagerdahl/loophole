@@ -1,0 +1,32 @@
+@startuml
+title System Architecture - Loophole Booking Platform
+
+node "Client Layer" {
+  actor Guest
+  actor Admin
+  node "WordPress Frontend\n(Loopia PHP Server)" as WP
+}
+
+node "Backend Layer\n(Spring Boot - Render)" as API {
+  component "Booking Controller"
+  component "Admin Controller"
+  component "Availability Service"
+  component "Booking Service"
+  component "Room Service"
+  component "PriceRule Service"
+  component "Email Service"
+}
+
+database "PostgreSQL Database\n(Render/Railway)" as DB
+
+node "Admin Interface\n(Thymeleaf Server-Side UI)" as AdminUI
+
+Guest --> WP : Browses & submits forms
+WP --> API : Server-side requests\n(JSON + API Key)
+API --> DB : CRUD operations
+API --> AdminUI : Render admin views
+Admin --> AdminUI : Manage bookings, rooms, pricing
+
+API --> "Email Provider\n(SMTP/SendGrid)" : Sends confirmation
+
+@enduml

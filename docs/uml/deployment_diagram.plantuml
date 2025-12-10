@@ -1,0 +1,33 @@
+@startuml
+title Deployment Diagram - Loophole System
+
+node "Client Browser" {
+  artifact "Guest UI\n(WordPress Page)"
+  artifact "Admin UI\n(Server-rendered Thymeleaf)"
+}
+
+node "Loopia Hosting\n(PHP Server)" {
+  component "WordPress"
+  component "Custom Plugin\n(Server-side API calls)"
+}
+
+node "Render Cloud" {
+  node "Spring Boot Application" {
+    component "Booking API"
+    component "Admin Panel Renderer"
+  }
+
+  database "PostgreSQL"
+}
+
+node "Email Provider" {
+  component "SMTP / SendGrid"
+}
+
+"Guest UI\n(WordPress Page)" --> "WordPress"
+"WordPress" --> "Spring Boot Application" : HTTPS API calls
+"Spring Boot Application" --> "PostgreSQL" : SQL queries
+"Spring Boot Application" --> "SMTP / SendGrid" : send emails
+"Admin UI\n(Thymeleaf)" --> "Spring Boot Application" : HTML responses
+
+@enduml
